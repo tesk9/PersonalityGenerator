@@ -2,6 +2,7 @@ module Main exposing (..)
 
 import Accessibility exposing (..)
 import Button
+import Layout
 
 
 main : Program Never Model Msg
@@ -54,19 +55,25 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ h1 [] [ text "Personality Generator" ]
-        , h2 [] [ text "Generate a personality, because you clearly need one." ]
+        [ Layout.centered
+            [ header []
+                [ h1 [] [ text "Personality Generator" ]
+                , h2 [] [ text "Generate a personality, because you clearly need one." ]
+                ]
+            ]
         , main_ []
-            [ case model of
-                UnStarted ->
-                    Button.view "Start Generating"
-                        (ChangeStep (Generating ( "Rh negative", "Rh positive" )))
+            [ Layout.centered
+                [ case model of
+                    UnStarted ->
+                        Button.view "Start Generating"
+                            (ChangeStep (Generating ( "Rh negative", "Rh positive" )))
 
-                Generating options ->
-                    viewOptions options
+                    Generating options ->
+                        viewOptions options
 
-                FullyBaked personality ->
-                    text personality
+                    FullyBaked personality ->
+                        text personality
+                ]
             ]
         ]
 
