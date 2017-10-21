@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Accessibility exposing (..)
-import Html.Events exposing (onClick)
+import Button
 
 
 main : Program Never Model Msg
@@ -59,8 +59,8 @@ view model =
         , main_ []
             [ case model of
                 UnStarted ->
-                    button [ onClick (ChangeStep <| Generating ( "Rh negative", "Rh positive" )) ]
-                        [ text "Start Generating" ]
+                    Button.view "Start Generating"
+                        (ChangeStep (Generating ( "Rh negative", "Rh positive" )))
 
                 Generating options ->
                     viewOptions options
