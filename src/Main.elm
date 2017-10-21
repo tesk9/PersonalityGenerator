@@ -55,7 +55,6 @@ traits =
             )
           )
         , ( "Rh negative", ( [ "smart", "high intuition", "fact-based" ], [ "easily frightened" ] ) )
-        , ( "Rh positive", ( [], [] ) )
         ]
 
 
