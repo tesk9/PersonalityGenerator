@@ -3,6 +3,7 @@ module Main exposing (..)
 import Accessibility exposing (..)
 import Button
 import Layout
+import Questions
 
 
 main : Program Never Model Msg
@@ -20,7 +21,7 @@ main =
 
 type Model
     = UnStarted
-    | Generating ( String, String )
+    | Generating Questions.Question
     | FullyBaked String
 
 
@@ -66,10 +67,17 @@ view model =
                 [ case model of
                     UnStarted ->
                         Button.view "Start Generating"
-                            (ChangeStep (Generating ( "Rh negative", "Rh positive" )))
+                            (ChangeStep
+                                (Generating <|
+                                    Questions.new "What is your Rh factor?"
+                                        [ ( "Rh negative", Nothing )
+                                        , ( "Rh positive", Nothing )
+                                        ]
+                                )
+                            )
 
-                    Generating options ->
-                        viewOptions options
+                    Generating question ->
+                        viewOptions question
 
                     FullyBaked personality ->
                         text personality
@@ -78,11 +86,22 @@ view model =
         ]
 
 
-viewOptions : ( String, String ) -> Html msg
-viewOptions ( optionA, optionB ) =
-    div [] [ viewOption optionA, viewOption optionB ]
+viewOptions : Questions.Question -> Html Msg
+viewOptions question =
+    div []
+        [ h3 [] [ text (Questions.directions question) ]
+        , div [] (List.map viewOption (Questions.options question))
+        ]
 
 
-viewOption : String -> Html msg
-viewOption option =
-    button [] [ text option ]
+viewOption : Questions.Option -> Html Msg
+viewOption ( option, nextQuestion ) =
+    Button.view option
+        (ChangeStep <|
+            case nextQuestion of
+                Just question ->
+                    Generating question
+
+                Nothing ->
+                    FullyBaked "Here's your personality!"
+        )
