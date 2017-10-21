@@ -119,9 +119,9 @@ view model =
                     FullyBaked ( goodTraits, badTraits ) ->
                         div []
                             [ h3 [] [ text "Best traits" ]
-                            , ul [] (List.map viewTrait goodTraits)
+                            , viewTraits goodTraits
                             , h3 [] [ text "Worst traits" ]
-                            , ul [] (List.map viewTrait badTraits)
+                            , viewTraits badTraits
                             ]
                 ]
             ]
@@ -157,6 +157,6 @@ changeStepButton text_ changeTo =
     Button.view text_ (ChangeStep changeTo)
 
 
-viewTrait : String -> Html msg
-viewTrait trait =
-    li [] [ text trait ]
+viewTraits : List String -> Html msg
+viewTraits traits =
+    ul [] (List.map (\trait -> li [] [ text trait ]) traits)
