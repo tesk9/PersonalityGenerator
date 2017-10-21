@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Accessibility exposing (..)
+import Html.Events exposing (onClick)
 
 
 main : Program Never Model Msg
@@ -33,6 +34,7 @@ model =
 
 type Msg
     = NoOp
+    | ChangeStep Model
 
 
 update : Msg -> Model -> Model
@@ -40,6 +42,9 @@ update msg model =
     case msg of
         NoOp ->
             model
+
+        ChangeStep newModel ->
+            newModel
 
 
 
@@ -54,7 +59,8 @@ view model =
         , main_ []
             [ case model of
                 UnStarted ->
-                    button [] [ text "Start Generating" ]
+                    button [ onClick (ChangeStep <| Generating ( "Rh negative", "Rh positive" )) ]
+                        [ text "Start Generating" ]
 
                 Generating options ->
                     viewOptions options
