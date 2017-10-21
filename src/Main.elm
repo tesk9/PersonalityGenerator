@@ -66,15 +66,13 @@ view model =
             [ Layout.centered
                 [ case model of
                     UnStarted ->
-                        Button.view "Start Generating"
-                            (ChangeStep
-                                (Generating <|
-                                    Questions.new "What is your Rh factor?"
-                                        [ ( "Rh negative", Nothing )
-                                        , ( "Rh positive", Nothing )
-                                        ]
+                        changeStepButton "Start Generating" <|
+                            Generating
+                                (Questions.new "What is your Rh factor?"
+                                    [ ( "Rh negative", Nothing )
+                                    , ( "Rh positive", Nothing )
+                                    ]
                                 )
-                            )
 
                     Generating question ->
                         viewOptions question
@@ -96,12 +94,15 @@ viewOptions question =
 
 viewOption : Questions.Option -> Html Msg
 viewOption ( option, nextQuestion ) =
-    Button.view option
-        (ChangeStep <|
-            case nextQuestion of
-                Just question ->
-                    Generating question
+    changeStepButton option <|
+        case nextQuestion of
+            Just question ->
+                Generating question
 
-                Nothing ->
-                    FullyBaked "Here's your personality!"
-        )
+            Nothing ->
+                FullyBaked "Here's your personality!"
+
+
+changeStepButton : String -> Model -> Html Msg
+changeStepButton text_ changeTo =
+    Button.view text_ (ChangeStep changeTo)
