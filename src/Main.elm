@@ -30,6 +30,24 @@ model =
     UnStarted
 
 
+bloodType : Questions.Question
+bloodType =
+    Questions.new "What is your blood type?"
+        [ ( "0", Just rhFactor )
+        , ( "A", Just rhFactor )
+        , ( "B", Just rhFactor )
+        , ( "AB", Just rhFactor )
+        ]
+
+
+rhFactor : Questions.Question
+rhFactor =
+    Questions.new "What is your Rh factor?"
+        [ ( "Rh negative", Nothing )
+        , ( "Rh positive", Nothing )
+        ]
+
+
 
 {- *** UPDATE *** -}
 
@@ -67,12 +85,7 @@ view model =
                 [ case model of
                     UnStarted ->
                         changeStepButton "Start Generating" <|
-                            Generating
-                                (Questions.new "What is your Rh factor?"
-                                    [ ( "Rh negative", Nothing )
-                                    , ( "Rh positive", Nothing )
-                                    ]
-                                )
+                            Generating bloodType
 
                     Generating question ->
                         viewOptions question
