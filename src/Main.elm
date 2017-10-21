@@ -16,13 +16,15 @@ main =
 {- *** MODEL *** -}
 
 
-type alias Model =
-    {}
+type Model
+    = UnStarted
+    | Generating ( String, String )
+    | FullyBaked String
 
 
 model : Model
 model =
-    {}
+    UnStarted
 
 
 
@@ -46,4 +48,28 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div [] [ text "HELLO, world!" ]
+    div []
+        [ h1 [] [ text "Personality Generator" ]
+        , h2 [] [ text "Generate a personality, because you clearly need one." ]
+        , main_ []
+            [ case model of
+                UnStarted ->
+                    button [] [ text "Start Generating" ]
+
+                Generating options ->
+                    viewOptions options
+
+                FullyBaked personality ->
+                    text personality
+            ]
+        ]
+
+
+viewOptions : ( String, String ) -> Html msg
+viewOptions ( optionA, optionB ) =
+    div [] [ viewOption optionA, viewOption optionB ]
+
+
+viewOption : String -> Html msg
+viewOption option =
+    button [] [ text option ]
