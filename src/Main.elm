@@ -106,7 +106,7 @@ traits =
             )
           )
         , ( "Aquarius"
-          , ( [ "friendly", "humanitarian", "honest", "loyal", "original", "inventice", "independent", "intellectual" ]
+          , ( [ "friendly", "humanitarian", "honest", "loyal", "original", "inventive", "independent", "intellectual" ]
             , [ "intractable", "contrary", "perverse", "unpredictable", "unemotional", "detached" ]
             )
           )
