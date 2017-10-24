@@ -2,7 +2,9 @@ module Main exposing (..)
 
 import Accessibility exposing (..)
 import Button
+import Css
 import Dict
+import Html.Attributes
 import Layout
 import Panel
 import Questions
@@ -203,7 +205,7 @@ viewOptions : ( List String, List String ) -> Questions.Question -> Html Msg
 viewOptions traits question =
     div []
         [ h3 [] [ text (Questions.directions question) ]
-        , div [] (List.map (viewOption traits) (Questions.options question))
+        , div [ styles [ Css.textAlign Css.center ] ] (List.map (viewOption traits) (Questions.options question))
         ]
 
 
@@ -234,3 +236,8 @@ changeStepButton text_ changeTo =
 viewTraits : List String -> Html msg
 viewTraits traits =
     ul [] (List.map (\trait -> li [] [ text trait ]) traits)
+
+
+styles : List Css.Style -> Attribute a
+styles =
+    Css.asPairs >> Html.Attributes.style
