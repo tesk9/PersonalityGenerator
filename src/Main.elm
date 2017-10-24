@@ -6,6 +6,7 @@ import Css
 import Dict
 import Html.Attributes
 import Layout
+import List.Extra
 import Panel
 import Questions
 
@@ -235,7 +236,10 @@ changeStepButton text_ changeTo =
 
 viewTraits : List String -> Html msg
 viewTraits traits =
-    ul [] (List.map (\trait -> li [] [ text trait ]) traits)
+    traits
+        |> List.Extra.unique
+        |> List.map (\trait -> li [] [ text trait ])
+        |> ul []
 
 
 styles : List Css.Style -> Attribute a
