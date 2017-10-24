@@ -226,7 +226,7 @@ viewOptions traits question =
     div []
         [ Text.h3 (Questions.directions question)
         , Html.Keyed.ul
-            [ styles [ Css.textAlign Css.center, Css.listStyle Css.none ] ]
+            [ styles [ Css.textAlign Css.center, Css.listStyle Css.none, Css.padding Css.zero ] ]
             (List.map
                 (\( option, nextQuestion ) -> ( option, viewOption traits ( option, nextQuestion ) ))
                 (Questions.options question)

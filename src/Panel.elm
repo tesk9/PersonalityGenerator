@@ -16,10 +16,9 @@ view =
     div
         [ styles
             [ margin (px 16)
-            , padding (px 16)
+            , padding2 zero (px 16)
             , minWidth (px 200)
-            , borderRadius (px 4)
-            , border3 (px 1) solid light
+            , border3 (px 1) solid hue2
             , fontFamily sansSerif
             ]
         ]
