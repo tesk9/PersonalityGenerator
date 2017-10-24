@@ -5,6 +5,11 @@ import Css exposing (..)
 import Html.Attributes
 
 
+page : List (Html a) -> Html a
+page =
+    div []
+
+
 main_ : List (Html a) -> Html a
 main_ =
     Html.main_

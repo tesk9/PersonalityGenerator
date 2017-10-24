@@ -169,15 +169,10 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    case model of
-        UnStarted ->
-            div []
-                [ Layout.centered
-                    [ header []
-                        [ h1 [] [ text "Personality Generator" ]
-                        , h2 [] [ text "Generate a personality, because you clearly need one." ]
-                        ]
-                    ]
+    Layout.page <|
+        case model of
+            UnStarted ->
+                [ heading "Generate a personality, because you clearly need one."
                 , Layout.main_
                     [ Layout.centered
                         [ changeStepButton "Start Generating" <|
@@ -186,14 +181,8 @@ view model =
                     ]
                 ]
 
-        Generating traits question ->
-            div []
-                [ Layout.centered
-                    [ header []
-                        [ h1 [] [ text "Personality Generator" ]
-                        , h2 [] [ text "Your personality is becoming clear... soon you will know who you are." ]
-                        ]
-                    ]
+            Generating traits question ->
+                [ heading "Your personality is becoming clear... soon you will know who you are."
                 , Layout.main_
                     [ Layout.centered
                         [ viewOptions traits question
@@ -201,14 +190,8 @@ view model =
                     ]
                 ]
 
-        FullyBaked ( goodTraits, badTraits ) ->
-            div []
-                [ Layout.centered
-                    [ header []
-                        [ h1 [] [ text "Personality Generator" ]
-                        , h2 [] [ text "We know who you are... do you?" ]
-                        ]
-                    ]
+            FullyBaked ( goodTraits, badTraits ) ->
+                [ heading "We know who you are... do you?"
                 , Layout.main_
                     [ Layout.centered
                         [ Layout.paneled
@@ -224,6 +207,16 @@ view model =
                         ]
                     ]
                 ]
+
+
+heading : String -> Html msg
+heading subheading =
+    Layout.centered
+        [ header []
+            [ h1 [] [ text "Personality Generator" ]
+            , h2 [] [ text subheading ]
+            ]
+        ]
 
 
 viewOptions : ( List String, List String ) -> Questions.Question -> Html Msg
