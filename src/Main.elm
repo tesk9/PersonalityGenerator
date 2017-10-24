@@ -4,6 +4,7 @@ import Accessibility exposing (..)
 import Button
 import Dict
 import Layout
+import Panel
 import Questions
 
 
@@ -172,7 +173,7 @@ view model =
                 , h2 [] [ text "Generate a personality, because you clearly need one." ]
                 ]
             ]
-        , main_ []
+        , Layout.main_
             [ Layout.centered
                 [ case model of
                     UnStarted ->
@@ -183,11 +184,15 @@ view model =
                         viewOptions traits question
 
                     FullyBaked ( goodTraits, badTraits ) ->
-                        div []
-                            [ h3 [] [ text "Best traits" ]
-                            , viewTraits goodTraits
-                            , h3 [] [ text "Worst traits" ]
-                            , viewTraits badTraits
+                        Layout.paneled
+                            [ Panel.view
+                                [ h3 [] [ text "Best traits" ]
+                                , viewTraits goodTraits
+                                ]
+                            , Panel.view
+                                [ h3 [] [ text "Worst traits" ]
+                                , viewTraits badTraits
+                                ]
                             ]
                 ]
             ]

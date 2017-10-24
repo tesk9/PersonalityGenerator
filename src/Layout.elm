@@ -5,7 +5,16 @@ import Css exposing (..)
 import Html.Attributes
 
 
-{-| -}
+main_ : List (Html a) -> Html a
+main_ =
+    Html.main_
+        [ styles
+            [ maxWidth (px 700)
+            , margin2 zero auto
+            ]
+        ]
+
+
 centered : List (Html a) -> Html a
 centered =
     div
@@ -13,6 +22,17 @@ centered =
             [ displayFlex
             , justifyContent center
             , alignItems center
+            ]
+        ]
+
+
+paneled : List (Html a) -> Html a
+paneled =
+    div
+        [ styles
+            [ displayFlex
+            , justifyContent spaceAround
+            , minWidth (pct 100)
             ]
         ]
 
