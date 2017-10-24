@@ -5,6 +5,7 @@ import Button
 import Css
 import Dict
 import Html.Attributes
+import Html.Keyed
 import Layout
 import List.Extra
 import Panel
@@ -224,8 +225,12 @@ viewOptions : ( List String, List String ) -> Questions.Question -> Html Msg
 viewOptions traits question =
     div []
         [ Text.h3 (Questions.directions question)
-        , div [ styles [ Css.textAlign Css.center ] ]
-            (List.map (viewOption traits) (Questions.options question))
+        , Html.Keyed.ul
+            [ styles [ Css.textAlign Css.center, Css.listStyle Css.none ] ]
+            (List.map
+                (\( option, nextQuestion ) -> ( option, viewOption traits ( option, nextQuestion ) ))
+                (Questions.options question)
+            )
         ]
 
 
