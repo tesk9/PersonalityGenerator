@@ -137,18 +137,21 @@ viewOptions traits question =
 
 viewOption : ( List String, List String ) -> Questions.Option -> Html Msg
 viewOption ( goodTraits, badTraits ) ( option, nextQuestion ) =
+    let
+        ( newGoodTraits, newBadTraits ) =
+            Dict.get option traits
+                |> Maybe.withDefault ( [], [] )
+
+        newTraits =
+            ( newGoodTraits ++ goodTraits, newBadTraits ++ badTraits )
+    in
     changeStepButton option <|
         case nextQuestion of
             Just question ->
-                let
-                    ( newGoodTraits, newBadTraits ) =
-                        Dict.get option traits
-                            |> Maybe.withDefault ( [], [] )
-                in
-                Generating ( newGoodTraits ++ goodTraits, newBadTraits ++ badTraits ) question
+                Generating newTraits question
 
             Nothing ->
-                FullyBaked ( goodTraits, badTraits )
+                FullyBaked newTraits
 
 
 changeStepButton : String -> Model -> Html Msg
