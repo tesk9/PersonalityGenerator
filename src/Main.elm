@@ -184,7 +184,7 @@ view model =
                 ]
 
             FullyBaked ( goodTraits, badTraits ) ->
-                [ heading "We know who you are... do you?"
+                [ heading "We know who you are. Do you?"
                 , body <|
                     Layout.paneled
                         [ Panel.view
