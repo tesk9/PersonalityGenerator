@@ -173,39 +173,28 @@ view model =
         case model of
             UnStarted ->
                 [ heading "Generate a personality, because you clearly need one."
-                , Layout.main_
-                    [ Layout.centered
-                        [ changeStepButton "Start Generating" <|
-                            Generating ( [], [] ) bloodType
-                        ]
-                    ]
+                , body <|
+                    changeStepButton "Start Generating" (Generating ( [], [] ) bloodType)
                 ]
 
             Generating traits question ->
                 [ heading "Your personality is becoming clear... soon you will know who you are."
-                , Layout.main_
-                    [ Layout.centered
-                        [ viewOptions traits question
-                        ]
-                    ]
+                , body (viewOptions traits question)
                 ]
 
             FullyBaked ( goodTraits, badTraits ) ->
                 [ heading "We know who you are... do you?"
-                , Layout.main_
-                    [ Layout.centered
-                        [ Layout.paneled
-                            [ Panel.view
-                                [ h3 [] [ text "Best traits" ]
-                                , viewTraits goodTraits
-                                ]
-                            , Panel.view
-                                [ h3 [] [ text "Worst traits" ]
-                                , viewTraits badTraits
-                                ]
+                , body <|
+                    Layout.paneled
+                        [ Panel.view
+                            [ h3 [] [ text "Best traits" ]
+                            , viewTraits goodTraits
+                            ]
+                        , Panel.view
+                            [ h3 [] [ text "Worst traits" ]
+                            , viewTraits badTraits
                             ]
                         ]
-                    ]
                 ]
 
 
@@ -215,6 +204,15 @@ heading subheading =
         [ header []
             [ h1 [] [ text "Personality Generator" ]
             , h2 [] [ text subheading ]
+            ]
+        ]
+
+
+body : Html a -> Html a
+body bodyContent =
+    Layout.main_
+        [ Layout.centered
+            [ bodyContent
             ]
         ]
 
