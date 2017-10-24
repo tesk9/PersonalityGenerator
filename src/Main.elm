@@ -201,10 +201,12 @@ view model =
 
 heading : String -> Html msg
 heading subheading =
-    Layout.centered
-        [ header []
-            [ Text.h1 "Personality Generator"
-            , Text.h2 subheading
+    Layout.header
+        [ Layout.centered
+            [ div []
+                [ Text.h1 "Personality Generator"
+                , Text.h2 subheading
+                ]
             ]
         ]
 

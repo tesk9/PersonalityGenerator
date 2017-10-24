@@ -3,11 +3,22 @@ module Layout exposing (..)
 import Accessibility as Html exposing (Html, div)
 import Css exposing (..)
 import Html.Attributes
+import Theme
 
 
 page : List (Html a) -> Html a
 page =
     div []
+
+
+header : List (Html a) -> Html a
+header =
+    Html.header
+        [ styles
+            [ maxWidth (vw 100)
+            , borderBottom3 (px 4) solid Theme.hue4
+            ]
+        ]
 
 
 main_ : List (Html a) -> Html a
