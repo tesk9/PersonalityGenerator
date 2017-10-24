@@ -15,6 +15,7 @@ main_ =
     Html.main_
         [ styles
             [ maxWidth (px 700)
+            , height (vh 70)
             , margin2 zero auto
             ]
         ]
@@ -27,6 +28,7 @@ centered =
             [ displayFlex
             , justifyContent center
             , alignItems center
+            , minHeight (pct 100)
             ]
         ]
 

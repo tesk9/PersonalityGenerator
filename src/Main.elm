@@ -221,7 +221,7 @@ body bodyContent =
 viewOptions : ( List String, List String ) -> Questions.Question -> Html Msg
 viewOptions traits question =
     div []
-        [ h3 [] [ text (Questions.directions question) ]
+        [ Text.h3 (Questions.directions question)
         , div [ styles [ Css.textAlign Css.center ] ]
             (List.map (viewOption traits) (Questions.options question))
         ]
