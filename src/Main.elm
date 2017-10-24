@@ -169,25 +169,49 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ Layout.centered
-            [ header []
-                [ h1 [] [ text "Personality Generator" ]
-                , h2 [] [ text "Generate a personality, because you clearly need one." ]
-                ]
-            ]
-        , Layout.main_
-            [ Layout.centered
-                [ case model of
-                    UnStarted ->
-                        changeStepButton "Start Generating" <|
+    case model of
+        UnStarted ->
+            div []
+                [ Layout.centered
+                    [ header []
+                        [ h1 [] [ text "Personality Generator" ]
+                        , h2 [] [ text "Generate a personality, because you clearly need one." ]
+                        ]
+                    ]
+                , Layout.main_
+                    [ Layout.centered
+                        [ changeStepButton "Start Generating" <|
                             Generating ( [], [] ) bloodType
+                        ]
+                    ]
+                ]
 
-                    Generating traits question ->
-                        viewOptions traits question
+        Generating traits question ->
+            div []
+                [ Layout.centered
+                    [ header []
+                        [ h1 [] [ text "Personality Generator" ]
+                        , h2 [] [ text "Your personality is becoming clear... soon you will know who you are." ]
+                        ]
+                    ]
+                , Layout.main_
+                    [ Layout.centered
+                        [ viewOptions traits question
+                        ]
+                    ]
+                ]
 
-                    FullyBaked ( goodTraits, badTraits ) ->
-                        Layout.paneled
+        FullyBaked ( goodTraits, badTraits ) ->
+            div []
+                [ Layout.centered
+                    [ header []
+                        [ h1 [] [ text "Personality Generator" ]
+                        , h2 [] [ text "We know who you are... do you?" ]
+                        ]
+                    ]
+                , Layout.main_
+                    [ Layout.centered
+                        [ Layout.paneled
                             [ Panel.view
                                 [ h3 [] [ text "Best traits" ]
                                 , viewTraits goodTraits
@@ -197,16 +221,17 @@ view model =
                                 , viewTraits badTraits
                                 ]
                             ]
+                        ]
+                    ]
                 ]
-            ]
-        ]
 
 
 viewOptions : ( List String, List String ) -> Questions.Question -> Html Msg
 viewOptions traits question =
     div []
         [ h3 [] [ text (Questions.directions question) ]
-        , div [ styles [ Css.textAlign Css.center ] ] (List.map (viewOption traits) (Questions.options question))
+        , div [ styles [ Css.textAlign Css.center ] ]
+            (List.map (viewOption traits) (Questions.options question))
         ]
 
 
