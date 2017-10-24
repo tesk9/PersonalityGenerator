@@ -9,6 +9,7 @@ import Layout
 import List.Extra
 import Panel
 import Questions
+import Text
 
 
 main : Program Never Model Msg
@@ -202,8 +203,8 @@ heading : String -> Html msg
 heading subheading =
     Layout.centered
         [ header []
-            [ h1 [] [ text "Personality Generator" ]
-            , h2 [] [ text subheading ]
+            [ Text.h1 "Personality Generator"
+            , Text.h2 subheading
             ]
         ]
 

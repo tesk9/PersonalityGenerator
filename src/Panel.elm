@@ -20,7 +20,6 @@ view =
             , minWidth (px 200)
             , borderRadius (px 4)
             , border3 (px 1) solid light
-            , color dark
             , fontFamily sansSerif
             ]
         ]

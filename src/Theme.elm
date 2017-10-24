@@ -3,6 +3,11 @@ module Theme exposing (..)
 import Css exposing (..)
 
 
+grayDark : Css.Color
+grayDark =
+    hex "505050"
+
+
 darkest : Css.Color
 darkest =
     hex "17081C"
