@@ -50,9 +50,19 @@ type BloodType
     | O
 
 
+bloodTypes : List BloodType
+bloodTypes =
+    [ A, B, AB, O ]
+
+
 type RhFactor
     = Positive
     | Negative
+
+
+rhFactors : List RhFactor
+rhFactors =
+    [ Positive, Negative ]
 
 
 type ZodiacSign
@@ -68,6 +78,11 @@ type ZodiacSign
     | Capricorn
     | Aquarius
     | Pisces
+
+
+zodiacSigns : List ZodiacSign
+zodiacSigns =
+    [ Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, Pisces ]
 
 
 traits : Dict.Dict String ( List String, List String )
