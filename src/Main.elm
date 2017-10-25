@@ -3,7 +3,6 @@ module Main exposing (..)
 import Accessibility exposing (..)
 import Button
 import Css
-import Dict
 import Html.Attributes
 import Html.Keyed
 import Layout
@@ -11,12 +10,13 @@ import List.Extra
 import Panel
 import Questions
 import Text
+import Traits exposing (TraitDeterminant)
 
 
 main : Program Never Model Msg
 main =
     beginnerProgram
-        { model = init
+        { model = UnStarted
         , view = view
         , update = update
         }
@@ -28,168 +28,31 @@ main =
 
 type Model
     = UnStarted
-    | Generating ( List String, List String ) Questions.Question
+    | Generating ( List String, List String ) Question
     | FullyBaked ( List String, List String )
 
 
-init : Model
-init =
-    UnStarted
+type alias Question =
+    Questions.Question TraitDeterminant
 
 
-type TraitDeterminant
-    = BloodType BloodType
-    | RhFactor RhFactor
-    | ZodiacSign ZodiacSign
-
-
-type BloodType
-    = A
-    | B
-    | AB
-    | O
-
-
-bloodTypes : List BloodType
-bloodTypes =
-    [ A, B, AB, O ]
-
-
-type RhFactor
-    = Positive
-    | Negative
-
-
-rhFactors : List RhFactor
-rhFactors =
-    [ Positive, Negative ]
-
-
-type ZodiacSign
-    = Aries
-    | Taurus
-    | Gemini
-    | Cancer
-    | Leo
-    | Virgo
-    | Libra
-    | Scorpio
-    | Sagittarius
-    | Capricorn
-    | Aquarius
-    | Pisces
-
-
-zodiacSigns : List ZodiacSign
-zodiacSigns =
-    [ Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, Pisces ]
-
-
-traits : Dict.Dict String ( List String, List String )
-traits =
-    Dict.fromList
-        [ ( "A"
-          , ( [ "earnest", "reserved", "sensible", "patient", "responsible", "cautious" ]
-            , [ "fastidious", "over-earnest", "proud", "stubborn", "tense", "mischievous", "obsessive", "pessimistic" ]
-            )
-          )
-        , ( "B"
-          , ( [ "passionate", "active", "creative", "animal-loving", "flexible", "cheerful", "friendly", "optimistic" ]
-            , [ "irresponsible", "forgetful", "selfish", "lazy", "impatient", "unreliable", "\"going own way\"" ]
-            )
-          )
-        , ( "AB"
-          , ( [ "cool", "controlled", "rational", "sociable", "intelligent", "adaptable" ]
-            , [ "critical", "indecisive", "unforgiving", "two-faced", "aloof", "\"split personality\"" ]
-            )
-          )
-        , ( "O"
-          , ( [ "confident", "self-determined", "ambitious", "strong-willed", "intuitive", "agreeable", "competitive", "athletic" ]
-            , [ "unpredictable", "spiteful", "self-centered", "cold", "aggressive", "arrogant", "envious", "ruthless" ]
-            )
-          )
-        , ( "Rh negative", ( [ "smart", "high intuition", "fact-based" ], [ "easily frightened" ] ) )
-        , ( "Aries"
-          , ( [ "adventurous", "energetic", "pioneering", "courageous", "enthousiastic", "confident", "dynamic", "quick-witted" ]
-            , [ "selfish", "quick-tempered", "impulsive", "impatient", "foolhardy", "daredevil" ]
-            )
-          )
-        , ( "Taurus"
-          , ( [ "patient", "reliable", "warm-hearted", "loving", "persistent", "determined", "placid", "security-loving" ]
-            , [ "jealous", "possessive", "resentful", "inflexible", "self-indulgent", "greedy" ]
-            )
-          )
-        , ( "Gemini"
-          , ( [ "adaptable", "versatile", "communicative", "witty", "intellectual", "eloquent", "youthful", "lively" ]
-            , [ "nervous", "tense", "superficial", "inconsistent", "cunning", "inquisistive" ]
-            )
-          )
-        , ( "Cancer"
-          , ( [ "emotional", "loving", "intuitive", "imaginative", "shrewd", "cautious", "protectice", "sympathetic" ]
-            , [ "changeable", "moody", "overemotional", "touchy", "clingy", "unable to let go" ]
-            )
-          )
-        , ( "Leo"
-          , ( [ "generous", "warm-hearted", "creative", "enthousiastic", "broad-minded", "expansive", "faitful", "loving" ]
-            , [ "pompous", "patronizing", "bossy", "interfering", "dogmatic", "intolerant" ]
-            )
-          )
-        , ( "Virgo"
-          , ( [ "modest", "shy", "meticulous", "reliable", "practical", "diligent", "intelligent", "analytical" ]
-            , [ "fussy", "worrier", "overcritcal", "harsh", "perfectionist", "conservatice" ]
-            )
-          )
-        , ( "Libra"
-          , ( [ "diplomatic", "urbane", "romantic", "charming", "easy-going", "sociable", "idealistic", "peacable" ]
-            , [ "indecisive", "changeable", "gullible", "easily influenced", "flirtatious", "self-indulgent" ]
-            )
-          )
-        , ( "Scorpio"
-          , ( [ "determined", "forceful", "emotional", "intuitive", "powerful", "passionate", "exciting", "magnetic" ]
-            , [ "jealous", "resentful", "compulsive", "obsessive", "secretive", "obstinate" ]
-            )
-          )
-        , ( "Sagittarius"
-          , ( [ "optimistic", "freedom-loving", "jovial", "good-humored", "honest", "straightforward", "intellectual", "philosophical" ]
-            , [ "blindly optimistic", "careless", "irresponsible", "superficial", "tactless", "restless" ]
-            )
-          )
-        , ( "Capricorn"
-          , ( [ "practical", "prudent", "ambitious", "disciplined", "patient", "careful", "humorous", "reserved" ]
-            , [ "pessimistic", "fatalistic", "miserly", "grudging" ]
-            )
-          )
-        , ( "Aquarius"
-          , ( [ "friendly", "humanitarian", "honest", "loyal", "original", "inventive", "independent", "intellectual" ]
-            , [ "intractable", "contrary", "perverse", "unpredictable", "unemotional", "detached" ]
-            )
-          )
-        , ( "Pisces"
-          , ( [ "imaginative", "sensitive", "compassionate", "kind", "selfless", "unworldly", "intuitive", "sympathetic" ]
-            , [ "escapist", "idealistic", "secretive", "vague", "weak-willed", "easily led" ]
-            )
-          )
-        ]
-
-
-bloodType : Questions.Question
+bloodType : Question
 bloodType =
-    [ "A", "B", "AB", "O" ]
+    Traits.bloodTypes
         |> List.map (\key -> ( key, Just rhFactor ))
         |> Questions.new "What is your blood type?"
 
 
-rhFactor : Questions.Question
+rhFactor : Question
 rhFactor =
-    Questions.new "What is your Rh factor?"
-        [ ( "Rh negative", Just zodiacSign )
-        , ( "Rh positive", Just zodiacSign )
-        ]
+    Traits.rhFactors
+        |> List.map (\key -> ( key, Just zodiacSign ))
+        |> Questions.new "What is your Rh factor?"
 
 
-zodiacSign : Questions.Question
+zodiacSign : Question
 zodiacSign =
-    [ "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces" ]
+    Traits.zodiacSigns
         |> List.map (\key -> ( key, Nothing ))
         |> Questions.new "What is your Zodiac sign?"
 
@@ -269,30 +132,30 @@ body bodyContent =
         ]
 
 
-viewOptions : ( List String, List String ) -> Questions.Question -> Html Msg
+viewOptions : ( List String, List String ) -> Question -> Html Msg
 viewOptions traits question =
     div []
         [ Text.h3 (Questions.directions question)
         , Html.Keyed.ul
             [ styles [ Css.textAlign Css.center, Css.listStyle Css.none, Css.padding Css.zero ] ]
             (List.map
-                (\( option, nextQuestion ) -> ( option, viewOption traits ( option, nextQuestion ) ))
+                (\( option, nextQuestion ) -> ( toString option, viewOption traits ( option, nextQuestion ) ))
                 (Questions.options question)
             )
         ]
 
 
-viewOption : ( List String, List String ) -> Questions.Option -> Html Msg
+viewOption : ( List String, List String ) -> Questions.Option TraitDeterminant -> Html Msg
 viewOption ( goodTraits, badTraits ) ( option, nextQuestion ) =
     let
         ( newGoodTraits, newBadTraits ) =
-            Dict.get option traits
-                |> Maybe.withDefault ( [], [] )
+            --Traits.get option
+            ( [], [] )
 
         newTraits =
             ( newGoodTraits ++ goodTraits, newBadTraits ++ badTraits )
     in
-    changeStepButton option <|
+    changeStepButton (toString option) <|
         case nextQuestion of
             Just question ->
                 Generating newTraits question
