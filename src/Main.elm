@@ -130,7 +130,7 @@ viewOptions traits question =
             [ styles [ Css.textAlign Css.center, Css.listStyle Css.none, Css.padding Css.zero ] ]
             (List.map
                 (\( option, nextQuestion ) ->
-                    ( toString option, viewOption traits ( option, nextQuestion ) )
+                    ( Traits.toString option, viewOption traits ( option, nextQuestion ) )
                 )
                 (Questions.options question)
             )
@@ -139,7 +139,7 @@ viewOptions traits question =
 
 viewOption : List TraitDeterminant -> Questions.Option TraitDeterminant -> Html Msg
 viewOption traits ( option, nextQuestion ) =
-    changeStepButton (toString option) <|
+    changeStepButton (Traits.toString option) <|
         case nextQuestion of
             Just question ->
                 Generating (option :: traits) question

@@ -7,6 +7,7 @@ module Traits
         , bloodTypes
         , get
         , rhFactors
+        , toString
         , zodiacSigns
         )
 
@@ -27,7 +28,20 @@ get trait =
             getRhFactorTraits rhFactor
 
         ZodiacSign zodiacSign ->
-            getZodiacSign zodiacSign
+            getZodiacSignTraits zodiacSign
+
+
+toString : TraitDeterminant -> String
+toString trait =
+    case trait of
+        BloodType bloodType ->
+            toStringBloodType bloodType
+
+        RhFactor rhFactor ->
+            toStringRhFactor rhFactor
+
+        ZodiacSign zodiacSign ->
+            toStringZodiacSign zodiacSign
 
 
 type BloodType
@@ -40,6 +54,22 @@ type BloodType
 bloodTypes : List TraitDeterminant
 bloodTypes =
     List.map BloodType [ A, B, AB, O ]
+
+
+toStringBloodType : BloodType -> String
+toStringBloodType bloodType =
+    case bloodType of
+        A ->
+            "A"
+
+        B ->
+            "B"
+
+        AB ->
+            "AB"
+
+        O ->
+            "O"
 
 
 getBloodTypeTraits : BloodType -> ( List String, List String )
@@ -76,6 +106,16 @@ rhFactors =
     List.map RhFactor [ Positive, Negative ]
 
 
+toStringRhFactor : RhFactor -> String
+toStringRhFactor rhFactor =
+    case rhFactor of
+        Negative ->
+            "Negative"
+
+        Positive ->
+            "Positive"
+
+
 getRhFactorTraits : RhFactor -> ( List String, List String )
 getRhFactorTraits rhFactor =
     case rhFactor of
@@ -106,8 +146,48 @@ zodiacSigns =
     List.map ZodiacSign [ Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, Pisces ]
 
 
-getZodiacSign : ZodiacSign -> ( List String, List String )
-getZodiacSign sign =
+toStringZodiacSign : ZodiacSign -> String
+toStringZodiacSign sign =
+    case sign of
+        Aries ->
+            "Aries"
+
+        Taurus ->
+            "Taurus"
+
+        Gemini ->
+            "Gemini"
+
+        Cancer ->
+            "Cancer"
+
+        Leo ->
+            "Leo"
+
+        Virgo ->
+            "Virgo"
+
+        Libra ->
+            "Libra"
+
+        Scorpio ->
+            "Scorpio"
+
+        Sagittarius ->
+            "Sagittarius"
+
+        Capricorn ->
+            "Capricorn"
+
+        Aquarius ->
+            "Aquarius"
+
+        Pisces ->
+            "Pisces"
+
+
+getZodiacSignTraits : ZodiacSign -> ( List String, List String )
+getZodiacSignTraits sign =
     case sign of
         Aries ->
             ( [ "adventurous", "energetic", "pioneering", "courageous", "enthousiastic", "confident", "dynamic", "quick-witted" ]
