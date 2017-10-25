@@ -29,8 +29,8 @@ main =
 
 type Model
     = UnStarted
-    | Generating ( List String, List String ) Question
-    | FullyBaked ( List String, List String )
+    | Generating (List TraitDeterminant) Question
+    | FullyBaked (List TraitDeterminant)
 
 
 
@@ -64,7 +64,7 @@ view model =
                 [ heading "Generate a personality, because you clearly need one."
                 , body <|
                     changeStepButton "Start Generating"
-                        (Generating ( [], [] ) QuestionThread.first)
+                        (Generating [] QuestionThread.first)
                 ]
 
             Generating traits question ->
@@ -72,7 +72,20 @@ view model =
                 , body (viewOptions traits question)
                 ]
 
-            FullyBaked ( goodTraits, badTraits ) ->
+            FullyBaked answers ->
+                let
+                    ( goodTraits, badTraits ) =
+                        List.foldl
+                            (\trait ( goodAcc, badAcc ) ->
+                                let
+                                    ( good, bad ) =
+                                        Traits.get trait
+                                in
+                                ( good ++ goodAcc, bad ++ badAcc )
+                            )
+                            ( [], [] )
+                            answers
+                in
                 [ heading "We know who you are. Do you?"
                 , body <|
                     Layout.paneled
@@ -109,36 +122,30 @@ body bodyContent =
         ]
 
 
-viewOptions : ( List String, List String ) -> Question -> Html Msg
+viewOptions : List TraitDeterminant -> Question -> Html Msg
 viewOptions traits question =
     div []
         [ Text.h3 (Questions.directions question)
         , Html.Keyed.ul
             [ styles [ Css.textAlign Css.center, Css.listStyle Css.none, Css.padding Css.zero ] ]
             (List.map
-                (\( option, nextQuestion ) -> ( toString option, viewOption traits ( option, nextQuestion ) ))
+                (\( option, nextQuestion ) ->
+                    ( toString option, viewOption traits ( option, nextQuestion ) )
+                )
                 (Questions.options question)
             )
         ]
 
 
-viewOption : ( List String, List String ) -> Questions.Option TraitDeterminant -> Html Msg
-viewOption ( goodTraits, badTraits ) ( option, nextQuestion ) =
-    let
-        ( newGoodTraits, newBadTraits ) =
-            --Traits.get option
-            ( [], [] )
-
-        newTraits =
-            ( newGoodTraits ++ goodTraits, newBadTraits ++ badTraits )
-    in
+viewOption : List TraitDeterminant -> Questions.Option TraitDeterminant -> Html Msg
+viewOption traits ( option, nextQuestion ) =
     changeStepButton (toString option) <|
         case nextQuestion of
             Just question ->
-                Generating newTraits question
+                Generating (option :: traits) question
 
             Nothing ->
-                FullyBaked newTraits
+                FullyBaked (option :: traits)
 
 
 changeStepButton : String -> Model -> Html Msg
