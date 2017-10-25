@@ -13,6 +13,8 @@ module Traits
         , zodiacSigns
         )
 
+import List.Extra
+
 
 type TraitDeterminant
     = BloodType BloodType
@@ -21,12 +23,15 @@ type TraitDeterminant
 
 
 getAll : List TraitDeterminant -> ( List String, List String )
-getAll =
-    List.foldl
-        (\trait ( goodAcc, badAcc ) ->
-            ( best trait ++ goodAcc, worst trait ++ badAcc )
-        )
-        ( [], [] )
+getAll traits =
+    traits
+        |> List.foldl
+            (\trait ( goodAcc, badAcc ) ->
+                ( best trait ++ goodAcc, worst trait ++ badAcc )
+            )
+            ( [], [] )
+        |> Tuple.mapFirst List.Extra.unique
+        |> Tuple.mapSecond List.Extra.unique
 
 
 best : TraitDeterminant -> List String

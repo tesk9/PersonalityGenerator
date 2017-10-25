@@ -6,7 +6,6 @@ import Css
 import Html.Attributes
 import Html.Keyed
 import Layout
-import List.Extra
 import Panel
 import QuestionThread exposing (Question)
 import Questions
@@ -147,7 +146,6 @@ changeStepButton text_ changeTo =
 viewTraits : List String -> Html msg
 viewTraits traits =
     traits
-        |> List.Extra.unique
         |> List.map (\trait -> li [] [ text trait ])
         |> ul []
 
