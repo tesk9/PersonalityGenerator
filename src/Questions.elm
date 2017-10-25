@@ -1,18 +1,18 @@
 module Questions exposing (Option, Question, directions, new, options)
 
 
-type Question
+type Question a
     = Question
         { question : String
-        , options : List Option
+        , options : List (Option a)
         }
 
 
-type alias Option =
-    ( String, Maybe Question )
+type alias Option a =
+    ( a, Maybe (Question a) )
 
 
-new : String -> List Option -> Question
+new : String -> List (Option a) -> Question a
 new question options =
     Question
         { question = question
@@ -20,11 +20,11 @@ new question options =
         }
 
 
-directions : Question -> String
+directions : Question a -> String
 directions (Question { question }) =
     question
 
 
-options : Question -> List Option
+options : Question a -> List (Option a)
 options (Question { options }) =
     options
