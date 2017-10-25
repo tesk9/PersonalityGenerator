@@ -16,7 +16,7 @@ import Text
 main : Program Never Model Msg
 main =
     beginnerProgram
-        { model = model
+        { model = init
         , view = view
         , update = update
         }
@@ -32,9 +32,42 @@ type Model
     | FullyBaked ( List String, List String )
 
 
-model : Model
-model =
+init : Model
+init =
     UnStarted
+
+
+type TraitDeterminant
+    = BloodType BloodType
+    | RhFactor RhFactor
+    | ZodiacSign ZodiacSign
+
+
+type BloodType
+    = A
+    | B
+    | AB
+    | O
+
+
+type RhFactor
+    = Positive
+    | Negative
+
+
+type ZodiacSign
+    = Aries
+    | Taurus
+    | Gemini
+    | Cancer
+    | Leo
+    | Virgo
+    | Libra
+    | Scorpio
+    | Sagittarius
+    | Capricorn
+    | Aquarius
+    | Pisces
 
 
 traits : Dict.Dict String ( List String, List String )
