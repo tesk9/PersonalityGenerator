@@ -4,11 +4,12 @@ module Traits
         , RhFactor
         , TraitDeterminant
         , ZodiacSign
+        , best
         , bloodTypes
-        , get
         , getAll
         , rhFactors
         , toString
+        , worst
         , zodiacSigns
         )
 
@@ -23,26 +24,35 @@ getAll : List TraitDeterminant -> ( List String, List String )
 getAll =
     List.foldl
         (\trait ( goodAcc, badAcc ) ->
-            let
-                ( good, bad ) =
-                    get trait
-            in
-            ( good ++ goodAcc, bad ++ badAcc )
+            ( best trait ++ goodAcc, worst trait ++ badAcc )
         )
         ( [], [] )
 
 
-get : TraitDeterminant -> ( List String, List String )
-get trait =
+best : TraitDeterminant -> List String
+best trait =
     case trait of
         BloodType bloodType ->
-            getBloodTypeTraits bloodType
+            bestBloodTypeTraits bloodType
 
         RhFactor rhFactor ->
-            getRhFactorTraits rhFactor
+            bestRhFactorTraits rhFactor
 
         ZodiacSign zodiacSign ->
-            getZodiacSignTraits zodiacSign
+            bestZodiacSignTraits zodiacSign
+
+
+worst : TraitDeterminant -> List String
+worst trait =
+    case trait of
+        BloodType bloodType ->
+            worstBloodTypeTraits bloodType
+
+        RhFactor rhFactor ->
+            worstRhFactorTraits rhFactor
+
+        ZodiacSign zodiacSign ->
+            worstZodiacSignTraits zodiacSign
 
 
 toString : TraitDeterminant -> String
@@ -86,28 +96,36 @@ toStringBloodType bloodType =
             "O"
 
 
-getBloodTypeTraits : BloodType -> ( List String, List String )
-getBloodTypeTraits bloodType =
+bestBloodTypeTraits : BloodType -> List String
+bestBloodTypeTraits bloodType =
     case bloodType of
         A ->
-            ( [ "earnest", "reserved", "sensible", "patient", "responsible", "cautious" ]
-            , [ "fastidious", "over-earnest", "proud", "stubborn", "tense", "mischievous", "obsessive", "pessimistic" ]
-            )
+            [ "earnest", "reserved", "sensible", "patient", "responsible", "cautious" ]
 
         B ->
-            ( [ "passionate", "active", "creative", "animal-loving", "flexible", "cheerful", "friendly", "optimistic" ]
-            , [ "irresponsible", "forgetful", "selfish", "lazy", "impatient", "unreliable", "\"going own way\"" ]
-            )
+            [ "passionate", "active", "creative", "animal-loving", "flexible", "cheerful", "friendly", "optimistic" ]
 
         AB ->
-            ( [ "cool", "controlled", "rational", "sociable", "intelligent", "adaptable" ]
-            , [ "critical", "indecisive", "unforgiving", "two-faced", "aloof", "\"split personality\"" ]
-            )
+            [ "cool", "controlled", "rational", "sociable", "intelligent", "adaptable" ]
 
         O ->
-            ( [ "confident", "self-determined", "ambitious", "strong-willed", "intuitive", "agreeable", "competitive", "athletic" ]
-            , [ "unpredictable", "spiteful", "self-centered", "cold", "aggressive", "arrogant", "envious", "ruthless" ]
-            )
+            [ "confident", "self-determined", "ambitious", "strong-willed", "intuitive", "agreeable", "competitive", "athletic" ]
+
+
+worstBloodTypeTraits : BloodType -> List String
+worstBloodTypeTraits bloodType =
+    case bloodType of
+        A ->
+            [ "fastidious", "over-earnest", "proud", "stubborn", "tense", "mischievous", "obsessive", "pessimistic" ]
+
+        B ->
+            [ "irresponsible", "forgetful", "selfish", "lazy", "impatient", "unreliable", "\"going own way\"" ]
+
+        AB ->
+            [ "critical", "indecisive", "unforgiving", "two-faced", "aloof", "\"split personality\"" ]
+
+        O ->
+            [ "unpredictable", "spiteful", "self-centered", "cold", "aggressive", "arrogant", "envious", "ruthless" ]
 
 
 type RhFactor
@@ -130,14 +148,24 @@ toStringRhFactor rhFactor =
             "Positive"
 
 
-getRhFactorTraits : RhFactor -> ( List String, List String )
-getRhFactorTraits rhFactor =
+bestRhFactorTraits : RhFactor -> List String
+bestRhFactorTraits rhFactor =
     case rhFactor of
         Negative ->
-            ( [ "smart", "high intuition", "fact-based" ], [ "easily frightened" ] )
+            [ "smart", "high intuition", "fact-based" ]
 
         Positive ->
-            ( [], [] )
+            []
+
+
+worstRhFactorTraits : RhFactor -> List String
+worstRhFactorTraits rhFactor =
+    case rhFactor of
+        Negative ->
+            [ "easily frightened" ]
+
+        Positive ->
+            []
 
 
 type ZodiacSign
@@ -200,65 +228,81 @@ toStringZodiacSign sign =
             "Pisces"
 
 
-getZodiacSignTraits : ZodiacSign -> ( List String, List String )
-getZodiacSignTraits sign =
+bestZodiacSignTraits : ZodiacSign -> List String
+bestZodiacSignTraits sign =
     case sign of
         Aries ->
-            ( [ "adventurous", "energetic", "pioneering", "courageous", "enthousiastic", "confident", "dynamic", "quick-witted" ]
-            , [ "selfish", "quick-tempered", "impulsive", "impatient", "foolhardy", "daredevil" ]
-            )
+            [ "adventurous", "energetic", "pioneering", "courageous", "enthousiastic", "confident", "dynamic", "quick-witted" ]
 
         Taurus ->
-            ( [ "patient", "reliable", "warm-hearted", "loving", "persistent", "determined", "placid", "security-loving" ]
-            , [ "jealous", "possessive", "resentful", "inflexible", "self-indulgent", "greedy" ]
-            )
+            [ "patient", "reliable", "warm-hearted", "loving", "persistent", "determined", "placid", "security-loving" ]
 
         Gemini ->
-            ( [ "adaptable", "versatile", "communicative", "witty", "intellectual", "eloquent", "youthful", "lively" ]
-            , [ "nervous", "tense", "superficial", "inconsistent", "cunning", "inquisistive" ]
-            )
+            [ "adaptable", "versatile", "communicative", "witty", "intellectual", "eloquent", "youthful", "lively" ]
 
         Cancer ->
-            ( [ "emotional", "loving", "intuitive", "imaginative", "shrewd", "cautious", "protectice", "sympathetic" ]
-            , [ "changeable", "moody", "overemotional", "touchy", "clingy", "unable to let go" ]
-            )
+            [ "emotional", "loving", "intuitive", "imaginative", "shrewd", "cautious", "protectice", "sympathetic" ]
 
         Leo ->
-            ( [ "generous", "warm-hearted", "creative", "enthousiastic", "broad-minded", "expansive", "faitful", "loving" ]
-            , [ "pompous", "patronizing", "bossy", "interfering", "dogmatic", "intolerant" ]
-            )
+            [ "generous", "warm-hearted", "creative", "enthousiastic", "broad-minded", "expansive", "faitful", "loving" ]
 
         Virgo ->
-            ( [ "modest", "shy", "meticulous", "reliable", "practical", "diligent", "intelligent", "analytical" ]
-            , [ "fussy", "worrier", "overcritcal", "harsh", "perfectionist", "conservatice" ]
-            )
+            [ "modest", "shy", "meticulous", "reliable", "practical", "diligent", "intelligent", "analytical" ]
 
         Libra ->
-            ( [ "diplomatic", "urbane", "romantic", "charming", "easy-going", "sociable", "idealistic", "peacable" ]
-            , [ "indecisive", "changeable", "gullible", "easily influenced", "flirtatious", "self-indulgent" ]
-            )
+            [ "diplomatic", "urbane", "romantic", "charming", "easy-going", "sociable", "idealistic", "peacable" ]
 
         Scorpio ->
-            ( [ "determined", "forceful", "emotional", "intuitive", "powerful", "passionate", "exciting", "magnetic" ]
-            , [ "jealous", "resentful", "compulsive", "obsessive", "secretive", "obstinate" ]
-            )
+            [ "determined", "forceful", "emotional", "intuitive", "powerful", "passionate", "exciting", "magnetic" ]
 
         Sagittarius ->
-            ( [ "optimistic", "freedom-loving", "jovial", "good-humored", "honest", "straightforward", "intellectual", "philosophical" ]
-            , [ "blindly optimistic", "careless", "irresponsible", "superficial", "tactless", "restless" ]
-            )
+            [ "optimistic", "freedom-loving", "jovial", "good-humored", "honest", "straightforward", "intellectual", "philosophical" ]
 
         Capricorn ->
-            ( [ "practical", "prudent", "ambitious", "disciplined", "patient", "careful", "humorous", "reserved" ]
-            , [ "pessimistic", "fatalistic", "miserly", "grudging" ]
-            )
+            [ "practical", "prudent", "ambitious", "disciplined", "patient", "careful", "humorous", "reserved" ]
 
         Aquarius ->
-            ( [ "friendly", "humanitarian", "honest", "loyal", "original", "inventive", "independent", "intellectual" ]
-            , [ "intractable", "contrary", "perverse", "unpredictable", "unemotional", "detached" ]
-            )
+            [ "friendly", "humanitarian", "honest", "loyal", "original", "inventive", "independent", "intellectual" ]
 
         Pisces ->
-            ( [ "imaginative", "sensitive", "compassionate", "kind", "selfless", "unworldly", "intuitive", "sympathetic" ]
-            , [ "escapist", "idealistic", "secretive", "vague", "weak-willed", "easily led" ]
-            )
+            [ "imaginative", "sensitive", "compassionate", "kind", "selfless", "unworldly", "intuitive", "sympathetic" ]
+
+
+worstZodiacSignTraits : ZodiacSign -> List String
+worstZodiacSignTraits sign =
+    case sign of
+        Aries ->
+            [ "selfish", "quick-tempered", "impulsive", "impatient", "foolhardy", "daredevil" ]
+
+        Taurus ->
+            [ "jealous", "possessive", "resentful", "inflexible", "self-indulgent", "greedy" ]
+
+        Gemini ->
+            [ "nervous", "tense", "superficial", "inconsistent", "cunning", "inquisistive" ]
+
+        Cancer ->
+            [ "changeable", "moody", "overemotional", "touchy", "clingy", "unable to let go" ]
+
+        Leo ->
+            [ "pompous", "patronizing", "bossy", "interfering", "dogmatic", "intolerant" ]
+
+        Virgo ->
+            [ "fussy", "worrier", "overcritcal", "harsh", "perfectionist", "conservatice" ]
+
+        Libra ->
+            [ "indecisive", "changeable", "gullible", "easily influenced", "flirtatious", "self-indulgent" ]
+
+        Scorpio ->
+            [ "jealous", "resentful", "compulsive", "obsessive", "secretive", "obstinate" ]
+
+        Sagittarius ->
+            [ "blindly optimistic", "careless", "irresponsible", "superficial", "tactless", "restless" ]
+
+        Capricorn ->
+            [ "pessimistic", "fatalistic", "miserly", "grudging" ]
+
+        Aquarius ->
+            [ "intractable", "contrary", "perverse", "unpredictable", "unemotional", "detached" ]
+
+        Pisces ->
+            [ "escapist", "idealistic", "secretive", "vague", "weak-willed", "easily led" ]
