@@ -8,6 +8,7 @@ import Html.Keyed
 import Layout
 import List.Extra
 import Panel
+import QuestionThread exposing (Question)
 import Questions
 import Text
 import Traits exposing (TraitDeterminant)
@@ -30,31 +31,6 @@ type Model
     = UnStarted
     | Generating ( List String, List String ) Question
     | FullyBaked ( List String, List String )
-
-
-type alias Question =
-    Questions.Question TraitDeterminant
-
-
-bloodType : Question
-bloodType =
-    Traits.bloodTypes
-        |> List.map (\key -> ( key, Just rhFactor ))
-        |> Questions.new "What is your blood type?"
-
-
-rhFactor : Question
-rhFactor =
-    Traits.rhFactors
-        |> List.map (\key -> ( key, Just zodiacSign ))
-        |> Questions.new "What is your Rh factor?"
-
-
-zodiacSign : Question
-zodiacSign =
-    Traits.zodiacSigns
-        |> List.map (\key -> ( key, Nothing ))
-        |> Questions.new "What is your Zodiac sign?"
 
 
 
@@ -87,7 +63,8 @@ view model =
             UnStarted ->
                 [ heading "Generate a personality, because you clearly need one."
                 , body <|
-                    changeStepButton "Start Generating" (Generating ( [], [] ) bloodType)
+                    changeStepButton "Start Generating"
+                        (Generating ( [], [] ) QuestionThread.first)
                 ]
 
             Generating traits question ->
