@@ -75,16 +75,7 @@ view model =
             FullyBaked answers ->
                 let
                     ( goodTraits, badTraits ) =
-                        List.foldl
-                            (\trait ( goodAcc, badAcc ) ->
-                                let
-                                    ( good, bad ) =
-                                        Traits.get trait
-                                in
-                                ( good ++ goodAcc, bad ++ badAcc )
-                            )
-                            ( [], [] )
-                            answers
+                        Traits.getAll answers
                 in
                 [ heading "We know who you are. Do you?"
                 , body <|

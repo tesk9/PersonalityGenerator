@@ -6,6 +6,7 @@ module Traits
         , ZodiacSign
         , bloodTypes
         , get
+        , getAll
         , rhFactors
         , toString
         , zodiacSigns
@@ -16,6 +17,19 @@ type TraitDeterminant
     = BloodType BloodType
     | RhFactor RhFactor
     | ZodiacSign ZodiacSign
+
+
+getAll : List TraitDeterminant -> ( List String, List String )
+getAll =
+    List.foldl
+        (\trait ( goodAcc, badAcc ) ->
+            let
+                ( good, bad ) =
+                    get trait
+            in
+            ( good ++ goodAcc, bad ++ badAcc )
+        )
+        ( [], [] )
 
 
 get : TraitDeterminant -> ( List String, List String )
