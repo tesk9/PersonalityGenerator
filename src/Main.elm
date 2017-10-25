@@ -32,6 +32,11 @@ type Model
     | FullyBaked (List TraitDeterminant)
 
 
+beginGeneration : Model
+beginGeneration =
+    Generating [] QuestionThread.first
+
+
 
 {- *** UPDATE *** -}
 
@@ -61,9 +66,7 @@ view model =
         case model of
             UnStarted ->
                 [ heading "Generate a personality, because you clearly need one."
-                , body <|
-                    changeStepButton "Start Generating"
-                        (Generating [] QuestionThread.first)
+                , body (changeStepButton "Start Generating" beginGeneration)
                 ]
 
             Generating traits question ->
