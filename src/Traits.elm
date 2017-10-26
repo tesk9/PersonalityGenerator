@@ -14,6 +14,7 @@ module Traits
 import List.Extra
 import Traits.BloodType as BloodType exposing (BloodType)
 import Traits.ChineseZodiacSign as ChineseZodiacSign exposing (ChineseZodiacSign)
+import Traits.HairColor as HairColor exposing (HairColor)
 import Traits.RhFactor as RhFactor exposing (RhFactor)
 import Traits.ZodiacSign as ZodiacSign exposing (ZodiacSign)
 
@@ -23,6 +24,7 @@ type TraitDeterminant
     | RhFactor RhFactor
     | ZodiacSign ZodiacSign
     | ChineseZodiacSign ChineseZodiacSign
+    | HairColor HairColor
 
 
 bloodTypes : List TraitDeterminant
@@ -43,6 +45,11 @@ zodiacSigns =
 chineseZodiacSigns : List TraitDeterminant
 chineseZodiacSigns =
     List.map ChineseZodiacSign ChineseZodiacSign.all
+
+
+hairColors : List TraitDeterminant
+hairColors =
+    List.map HairColor HairColor.all
 
 
 getAll : List TraitDeterminant -> ( List String, List String )
@@ -72,6 +79,9 @@ best trait =
         ChineseZodiacSign zodiacSign ->
             ChineseZodiacSign.best zodiacSign
 
+        HairColor hairColor ->
+            HairColor.best hairColor
+
 
 worst : TraitDeterminant -> List String
 worst trait =
@@ -88,6 +98,9 @@ worst trait =
         ChineseZodiacSign zodiacSign ->
             ChineseZodiacSign.worst zodiacSign
 
+        HairColor hairColor ->
+            HairColor.worst hairColor
+
 
 toString : TraitDeterminant -> String
 toString trait =
@@ -103,3 +116,6 @@ toString trait =
 
         ChineseZodiacSign zodiacSign ->
             ChineseZodiacSign.toString zodiacSign
+
+        HairColor hairColor ->
+            HairColor.toString hairColor
