@@ -3,6 +3,7 @@ module Traits
         ( TraitDeterminant
         , best
         , bloodTypes
+        , chineseZodiacSigns
         , getAll
         , rhFactors
         , toString

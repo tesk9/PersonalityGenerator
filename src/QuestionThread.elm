@@ -30,5 +30,12 @@ rhFactor =
 zodiacSign : Question
 zodiacSign =
     Traits.zodiacSigns
-        |> List.map (\key -> ( key, Nothing ))
+        |> List.map (\key -> ( key, Just chineseZodiacSign ))
         |> Questions.new "What is your Zodiac sign?"
+
+
+chineseZodiacSign : Question
+chineseZodiacSign =
+    Traits.chineseZodiacSigns
+        |> List.map (\key -> ( key, Nothing ))
+        |> Questions.new "What is your Chinese Zodiac sign?"
