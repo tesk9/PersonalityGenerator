@@ -34,7 +34,7 @@ type Model
 
 beginGeneration : Model
 beginGeneration =
-    Generating [] QuestionThread.first
+    Generating [] QuestionThread.questions
 
 
 
