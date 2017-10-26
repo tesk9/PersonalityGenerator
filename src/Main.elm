@@ -75,22 +75,8 @@ view model =
                 ]
 
             FullyBaked answers ->
-                let
-                    ( goodTraits, badTraits ) =
-                        Traits.getAll answers
-                in
                 [ heading "We know who you are. Do you?"
-                , body <|
-                    Layout.paneled
-                        [ Panel.view
-                            [ h3 [] [ text "Best traits" ]
-                            , viewTraits goodTraits
-                            ]
-                        , Panel.view
-                            [ h3 [] [ text "Worst traits" ]
-                            , viewTraits badTraits
-                            ]
-                        ]
+                , body (viewResults answers)
                 ]
 
 
@@ -144,6 +130,23 @@ viewOption traits ( option, nextQuestion ) =
 changeStepButton : String -> Model -> Html Msg
 changeStepButton text_ changeTo =
     Button.view text_ (ChangeStep changeTo)
+
+
+viewResults answers =
+    let
+        ( goodTraits, badTraits ) =
+            Traits.getAll answers
+    in
+    Layout.paneled
+        [ Panel.view
+            [ h3 [] [ text "Best traits" ]
+            , viewTraits goodTraits
+            ]
+        , Panel.view
+            [ h3 [] [ text "Worst traits" ]
+            , viewTraits badTraits
+            ]
+        ]
 
 
 viewTraits : List String -> Html msg
