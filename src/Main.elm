@@ -155,15 +155,13 @@ viewResults answers =
 
 viewSummary : List String -> List String -> Html msg
 viewSummary goodTraits badTraits =
-    p []
-        [ text <|
-            case ( goodTraits, badTraits ) of
-                ( goodTrait :: remainingGoodTraits, badTrait :: remainingBadTraits ) ->
-                    "You think you are " ++ goodTrait ++ ", but know that sometimes you can be " ++ badTrait ++ ". "
+    Text.p <|
+        case ( goodTraits, badTraits ) of
+            ( goodTrait :: remainingGoodTraits, badTrait :: remainingBadTraits ) ->
+                "You think you are " ++ goodTrait ++ ", but know that sometimes you can be " ++ badTrait ++ ". "
 
-                ( _, _ ) ->
-                    ""
-        ]
+            ( _, _ ) ->
+                ""
 
 
 viewTraits : List String -> Html msg

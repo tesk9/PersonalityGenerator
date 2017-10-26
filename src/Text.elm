@@ -51,6 +51,20 @@ h3 text_ =
         ]
 
 
+p : String -> Html a
+p text_ =
+    Html.p
+        [ styles
+            [ color dark
+            , fontFamily sansSerif
+            , fontSize (px 14)
+            , textAlign center
+            ]
+        ]
+        [ Html.text text_
+        ]
+
+
 styles : List Style -> Html.Attribute a
 styles =
     asPairs >> Html.Attributes.style
