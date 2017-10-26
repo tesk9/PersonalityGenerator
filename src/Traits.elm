@@ -12,6 +12,7 @@ module Traits
 
 import List.Extra
 import Traits.BloodType as BloodType exposing (BloodType)
+import Traits.ChineseZodiacSign as ChineseZodiacSign exposing (ChineseZodiacSign)
 import Traits.RhFactor as RhFactor exposing (RhFactor)
 import Traits.ZodiacSign as ZodiacSign exposing (ZodiacSign)
 
@@ -20,6 +21,7 @@ type TraitDeterminant
     = BloodType BloodType
     | RhFactor RhFactor
     | ZodiacSign ZodiacSign
+    | ChineseZodiacSign ChineseZodiacSign
 
 
 bloodTypes : List TraitDeterminant
@@ -35,6 +37,11 @@ rhFactors =
 zodiacSigns : List TraitDeterminant
 zodiacSigns =
     List.map ZodiacSign ZodiacSign.zodiacSigns
+
+
+chineseZodiacSigns : List TraitDeterminant
+chineseZodiacSigns =
+    List.map ChineseZodiacSign ChineseZodiacSign.chineseZodiacSigns
 
 
 getAll : List TraitDeterminant -> ( List String, List String )
@@ -61,6 +68,9 @@ best trait =
         ZodiacSign zodiacSign ->
             ZodiacSign.best zodiacSign
 
+        ChineseZodiacSign zodiacSign ->
+            ChineseZodiacSign.best zodiacSign
+
 
 worst : TraitDeterminant -> List String
 worst trait =
@@ -74,6 +84,9 @@ worst trait =
         ZodiacSign zodiacSign ->
             ZodiacSign.worst zodiacSign
 
+        ChineseZodiacSign zodiacSign ->
+            ChineseZodiacSign.worst zodiacSign
+
 
 toString : TraitDeterminant -> String
 toString trait =
@@ -86,3 +99,6 @@ toString trait =
 
         ZodiacSign zodiacSign ->
             ZodiacSign.toString zodiacSign
+
+        ChineseZodiacSign zodiacSign ->
+            ChineseZodiacSign.toString zodiacSign
