@@ -15,30 +15,30 @@ first =
 
 bloodType : Question
 bloodType =
-    Traits.bloodTypes
-        |> List.map (\key -> ( key, Just rhFactor ))
-        |> Questions.new "What is your blood type?"
+    new "What is your blood type?"
+        Traits.bloodTypes
+        (Just rhFactor)
 
 
 rhFactor : Question
 rhFactor =
-    Traits.rhFactors
-        |> List.map (\key -> ( key, Just zodiacSign ))
-        |> Questions.new "What is your Rh factor?"
+    new "What is your Rh factor?"
+        Traits.rhFactors
+        (Just zodiacSign)
 
 
 zodiacSign : Question
 zodiacSign =
-    Traits.zodiacSigns
-        |> List.map (\key -> ( key, Just chineseZodiacSign ))
-        |> Questions.new "What is your Zodiac sign?"
+    new "What is your Zodiac sign?"
+        Traits.zodiacSigns
+        (Just chineseZodiacSign)
 
 
 chineseZodiacSign : Question
 chineseZodiacSign =
-    Traits.chineseZodiacSigns
-        |> List.map (\key -> ( key, Nothing ))
-        |> Questions.new "What is your Chinese Zodiac sign?"
+    new "What is your Chinese Zodiac sign?"
+        Traits.chineseZodiacSigns
+        Nothing
 
 
 new : String -> List TraitDeterminant -> Maybe Question -> Question
