@@ -5,6 +5,7 @@ module Traits
         , bloodTypes
         , chineseZodiacSigns
         , getAll
+        , hairColors
         , rhFactors
         , toString
         , worst
