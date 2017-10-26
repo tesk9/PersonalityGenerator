@@ -1,10 +1,10 @@
 module Traits.ZodiacSign
     exposing
         ( ZodiacSign
+        , all
         , best
         , toString
         , worst
-        , zodiacSigns
         )
 
 
@@ -23,8 +23,8 @@ type ZodiacSign
     | Pisces
 
 
-zodiacSigns : List ZodiacSign
-zodiacSigns =
+all : List ZodiacSign
+all =
     [ Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, Pisces ]
 
 

@@ -1,8 +1,8 @@
 module Traits.RhFactor
     exposing
         ( RhFactor
+        , all
         , best
-        , rhFactors
         , toString
         , worst
         )
@@ -13,8 +13,8 @@ type RhFactor
     | Negative
 
 
-rhFactors : List RhFactor
-rhFactors =
+all : List RhFactor
+all =
     [ Positive, Negative ]
 
 

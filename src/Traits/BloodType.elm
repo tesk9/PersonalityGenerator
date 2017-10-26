@@ -1,8 +1,8 @@
 module Traits.BloodType
     exposing
         ( BloodType
+        , all
         , best
-        , bloodTypes
         , toString
         , worst
         )
@@ -15,8 +15,8 @@ type BloodType
     | O
 
 
-bloodTypes : List BloodType
-bloodTypes =
+all : List BloodType
+all =
     [ A, B, AB, O ]
 
 

@@ -1,8 +1,8 @@
 module Traits.ChineseZodiacSign
     exposing
         ( ChineseZodiacSign
+        , all
         , best
-        , chineseZodiacSigns
         , toString
         , worst
         )
@@ -23,8 +23,8 @@ type ChineseZodiacSign
     | Pig
 
 
-chineseZodiacSigns : List ChineseZodiacSign
-chineseZodiacSigns =
+all : List ChineseZodiacSign
+all =
     [ Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Sheep, Monkey, Rooster, Dog, Pig ]
 
 

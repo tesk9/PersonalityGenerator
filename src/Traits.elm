@@ -26,22 +26,22 @@ type TraitDeterminant
 
 bloodTypes : List TraitDeterminant
 bloodTypes =
-    List.map BloodType BloodType.bloodTypes
+    List.map BloodType BloodType.all
 
 
 rhFactors : List TraitDeterminant
 rhFactors =
-    List.map RhFactor RhFactor.rhFactors
+    List.map RhFactor RhFactor.all
 
 
 zodiacSigns : List TraitDeterminant
 zodiacSigns =
-    List.map ZodiacSign ZodiacSign.zodiacSigns
+    List.map ZodiacSign ZodiacSign.all
 
 
 chineseZodiacSigns : List TraitDeterminant
 chineseZodiacSigns =
-    List.map ChineseZodiacSign ChineseZodiacSign.chineseZodiacSigns
+    List.map ChineseZodiacSign ChineseZodiacSign.all
 
 
 getAll : List TraitDeterminant -> ( List String, List String )
