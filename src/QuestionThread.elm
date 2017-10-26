@@ -39,3 +39,10 @@ chineseZodiacSign =
     Traits.chineseZodiacSigns
         |> List.map (\key -> ( key, Nothing ))
         |> Questions.new "What is your Chinese Zodiac sign?"
+
+
+new : String -> List TraitDeterminant -> Maybe Question -> Question
+new instruction options next =
+    options
+        |> List.map (\key -> ( key, next ))
+        |> Questions.new instruction
