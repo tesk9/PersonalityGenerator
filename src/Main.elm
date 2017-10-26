@@ -132,20 +132,37 @@ changeStepButton text_ changeTo =
     Button.view text_ (ChangeStep changeTo)
 
 
+viewResults : List TraitDeterminant -> Html msg
 viewResults answers =
     let
         ( goodTraits, badTraits ) =
             Traits.getAll answers
     in
-    Layout.paneled
-        [ Panel.view
-            [ h3 [] [ text "Best traits" ]
-            , viewTraits goodTraits
+    div []
+        [ viewSummary goodTraits badTraits
+        , Layout.paneled
+            [ Panel.view
+                [ h3 [] [ text "Best traits" ]
+                , viewTraits goodTraits
+                ]
+            , Panel.view
+                [ h3 [] [ text "Worst traits" ]
+                , viewTraits badTraits
+                ]
             ]
-        , Panel.view
-            [ h3 [] [ text "Worst traits" ]
-            , viewTraits badTraits
-            ]
+        ]
+
+
+viewSummary : List String -> List String -> Html msg
+viewSummary goodTraits badTraits =
+    p []
+        [ text <|
+            case ( goodTraits, badTraits ) of
+                ( goodTrait :: remainingGoodTraits, badTrait :: remainingBadTraits ) ->
+                    "You think you are " ++ goodTrait ++ ", but know that sometimes you can be " ++ badTrait ++ ". "
+
+                ( _, _ ) ->
+                    ""
         ]
 
 
